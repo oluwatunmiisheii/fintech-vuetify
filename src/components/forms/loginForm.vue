@@ -31,7 +31,7 @@
     <div class="text-center">
       <v-btn
         :disabled="!valid || isSubmitting"
-        color="primary"
+        color="info"
         depressed
         :loading="isSubmitting"
         @click="login"
@@ -66,15 +66,6 @@
       }
     },
 
-    computed: {
-      form () {
-        return {
-          password: this.login.email,
-          email: this.login.password,
-        }
-      },
-    },
-
     methods: {
       async login () {
         const isValid = this.$refs.loginForm.validate()
@@ -83,10 +74,10 @@
         }
         this.isSubmitting = true
         try {
-          const response = await this.$store.dispatch('auth/asyncLogin', this.loginDetails)
+          await this.$store.dispatch('auth/asyncLogin', this.loginDetails)
           this.resetLoginForm()
           this.showSuccessLoginNotification()
-          console.log(response)
+          this.$router.push({name: 'PaymentHistory'})
         }catch(loginError) {
           this.showErrorLoginNotification(loginError.message)
         }finally {
