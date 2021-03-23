@@ -16,6 +16,7 @@ export default {
       const url = "/auth/login/staff";
       try {
         const {data} = await apiClient.post(url, loginDetails);
+        apiClient.defaults.headers.common["Authorization"] = `Bearer ${data.access_token}`;
         localStorage.setItem('token', data.access_token)
         commit('SET_TOKEN', data.access_token)
         return data;
