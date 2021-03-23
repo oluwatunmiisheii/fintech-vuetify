@@ -12,11 +12,12 @@ export default {
   },
 
   actions: {
-    async asyncLogin(_, loginDetails) {
+    async asyncLogin({commit}, loginDetails) {
       const url = "/auth/login/staff";
       try {
         const {data} = await apiClient.post(url, loginDetails);
         localStorage.setItem('token', data.access_token)
+        commit('SET_TOKEN', data.access_token)
         return data;
       } catch (loginError) {
         throw new Error(loginError.response.data.message);
